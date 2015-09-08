@@ -2,7 +2,7 @@
 
 Simple plugin that lets you exit or restart an android process using `android.os.Process.killProcess(android.os.Process.myPid());`. Restarts happen using `PendingIntent`.  
 
-Useful where `navigator.app.exitApp();` might not work. Also useful if your app needs to reset and start from the Initail Activity. 
+Useful where `navigator.app.exitApp();` might not work. Also useful if your app needs to reset and start from the Initial Activity. 
 
 ## Usage
 
@@ -13,7 +13,7 @@ Useful where `navigator.app.exitApp();` might not work. Also useful if your app 
 #### 2. Install the plugin
 
     $ cd hello
-    $ cordova plugin install https://github.com/srivathsa-dhanraj/cordova-plugin-KillApp
+    $ cordova plugin add https://github.com/srivathsa-dhanraj/cordova-plugin-KillApp
 	    
 
 #### 3. HTML
