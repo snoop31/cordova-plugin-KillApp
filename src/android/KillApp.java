@@ -8,8 +8,12 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.content.Intent;
+import android.app.AlarmManager;
+import android.app.PendingIntent;	
+
 public class KillApp extends CordovaPlugin {
-	public static final String TAG = "Kill Android App Process";
+	public static final String TAG = "KillApp_plugin";
 	/**
 	* Constructor.
 	*/
@@ -26,16 +30,39 @@ public class KillApp extends CordovaPlugin {
 		Log.v(TAG,"Init KillApp");
 	}
 	public boolean execute(final String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		
 		final int duration = Toast.LENGTH_SHORT;
+		final JSONArray params = args;
 		// Shows a toast
-		Log.v(TAG,"KillApp received:"+ action);
 		cordova.getActivity().runOnUiThread(new Runnable() {
 			public void run() {
-				//Toast toast = Toast.makeText(cordova.getActivity().getApplicationContext(), action, duration);
-				//toast.show();
+				
+				int shouldRestart = 0;
+
+		        try {
+		            shouldRestart = params.getInt(0);
+		        } catch (JSONException e) {
+		            e.printStackTrace();
+		        }
+		        
+				if(shouldRestart == 1)
+				{
+
+					Intent i = cordova.getActivity().getBaseContext().getPackageManager().getLaunchIntentForPackage(
+						cordova.getActivity().getBaseContext().getPackageName());
+					int mPendingIntentId = 123456;
+					PendingIntent mPendingIntent = PendingIntent.getActivity(
+						cordova.getActivity().getBaseContext(), mPendingIntentId,    i, PendingIntent.FLAG_CANCEL_CURRENT);
+					AlarmManager mgr = (AlarmManager)cordova.getActivity().getBaseContext().getSystemService(cordova.getActivity().getBaseContext().ALARM_SERVICE);
+					mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+					
+				}
+				
 				android.os.Process.killProcess(android.os.Process.myPid());
+				
 			}
 		});
+		
 		return true;
 	}
 }
