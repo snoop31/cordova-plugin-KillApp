@@ -21,8 +21,8 @@ Edit `www/index.html` and add the following code inside `<HEAD></HEAD>`
 
     <script type="text/javascript" src="KillApp.js"></script>
 #### 4. Javascript
-  
-    KillApp.killProcess(); //Pass 1 to restart. 0 (optional) to exit.
+Pass 1 to restart. 0 (optional) to exit.
+    KillApp.killProcess(1); 
 
 
 
